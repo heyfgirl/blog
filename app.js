@@ -10,7 +10,7 @@ const routers = require('./routes');
 App.use(async (ctx, next) => {
     try{
         console.log("进入网站首页控制器");
-        // console.log(ctx.request)
+ //       console.log(ctx.request)
         await next();
     }catch(err){
         console.log(err);

@@ -12,7 +12,12 @@
 // 静态页面
 const staticRoute =function (route) {
     route.nested("index").all(async (ctx,next)=>{
-        return await ctx.render("index.html");
+	console.log("啊啊啊") 
+       return await ctx.render("index.html");
+    });
+    route.nested("/").all(async (ctx,next)=>{
+        console.log("啊啊啊")
+       return await ctx.render("index.html");
     });
 }
 
