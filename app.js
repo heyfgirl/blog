@@ -4,7 +4,7 @@ const App = new koa();
 const Static = require('koa-static');
 const Views = require('koa-views');
 const router = require('koa2-routing');
-const routers = require('./route');
+const routers = require('./routes');
 
 //加载全局错误
 App.use(async (ctx, next) => {
