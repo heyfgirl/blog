@@ -11,17 +11,17 @@
 
 // 静态页面
 const staticRoute =function (route) {
-    route.nested("index").all(async (ctx,next)=>{
+    route.nested("").all(async (ctx,next)=>{
 	console.log("啊啊啊") 
-       return await ctx.render("index.html");
-    });
-    route.nested("/").all(async (ctx,next)=>{
-        console.log("啊啊啊")
        return await ctx.render("index.html");
     });
 }
 
 module.exports = function(app){
     // apiRoute(app.route('/api')); 
-    staticRoute(app.route("/"));
+    app.route('/').all(async (ctx,next)=>{
+    	return await ctx.render("index.html");
+    })
+    staticRoute(app.route("/index"));
+
 }
