@@ -16,7 +16,7 @@ function viewRoute(app){
   app.use('/', require("../app/routes/page.server.routes"));
   //帖子页面
   app.use('/post', require("../app/routes/post.server.routes"));
-  app.use("/error", require("../app/routes/error.server.routes"));
+  // app.use("/error", require("../app/routes/error.server.routes"));
 }
 
 module.exports = function(app){
