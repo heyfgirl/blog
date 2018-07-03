@@ -14,7 +14,7 @@ module.exports = {
     "min_clients": 1,
     "key": "cw"
   },
-  mongodb: "mongodb://localhost/mydb",
+  mongodb: "mongodb://wangqiong:123456@localhost/mydb",
   qiniu: {
     ak: "u6mVUjMsvSUJ2BTqNYzj_nW_1BkqVuSzLjKF5-Bf",
     sk: "u3wg3F8nP0KiwNqlGUeMmIA9Zwxx5FlJ8IwvrVfL",
