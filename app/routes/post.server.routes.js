@@ -12,6 +12,7 @@ const mongoose = require("../../config/mongoose");
 router.get('/adveditor/test/version', function(req, res, next){
   mongoose.models.User.create({name: "王琼", nickname: "wqiong", username: "顶顶顶顶"}, function(err, doc){
     console.log(doc);
+    return res.json(doc);
   })
   // mongoose.models.User.findById("5b39eb90063f1c33e40caba5").select(["name", "nickname"]).populate({path: "role", select: ["name", "code"]}).exec(function(err, doc){
   //   console.log(doc);
