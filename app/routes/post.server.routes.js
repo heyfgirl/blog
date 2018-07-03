@@ -10,6 +10,7 @@ const mongoose = require("../../config/mongoose");
 
 
 router.get('/adveditor/test/version', function(req, res, next){
+  console.log("222222222=======>" + req);
   mongoose.models.User.create({name: "王琼", nickname: "wqiong", username: "顶顶顶顶"}, function(err, doc){
     if(err){
       console.log(err);
