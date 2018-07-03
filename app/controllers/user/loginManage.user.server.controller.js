@@ -51,6 +51,7 @@ module.exports = {
       }
   */
   login: function (req, res, next) {
+    console.log("login===================>")
     if (!req.body.user) return next(sysLibs.err('没有提供用户登录名或者手机号信息'));
     if (!req.body.password) return next(sysLibs.err('没有提供密码信息'));
     var vsf = req.headers.vsf ? req.headers.vsf : 'web';
@@ -205,6 +206,7 @@ module.exports = {
    *
    */
   checkLoginLog: function (req, res, next) {
+    console.log("222222")
     return next();
     // logger.warn('TOUCH HERE (checkLoginLog)');
     if (!req.body.user) return next(sysLibs.err('没有提供用户登录名或者手机号信息'));
