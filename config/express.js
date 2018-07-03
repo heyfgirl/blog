@@ -59,10 +59,9 @@ module.exports = function(){
     if(!result || result.result === undefined){
       // 没有返回值，返回404
       res.status = 404;
-      //非API接口直接跳转到 404页
-      if(req.path.indexOf("/api") === -1){
-        console.log(req.path);
-        // return res.redirect("/404");
+      //非API 非Public静态文件 接口 直接跳转到 404页
+      if(req.path.indexOf("/api") === -1 && req.path.indexOf("/public") === -1){
+        return res.redirect("/404.html");
       }
       return res.json({
         result: 'error',

@@ -1,4 +1,3 @@
-
 /**
  * @Author  wq
  * @Date    2018-04-23T16:01:58+08:00
@@ -13,10 +12,11 @@ function apiRoute(app){
 //渲染页面的VIEW路由
 function viewRoute(app){
   //主页页面
-  app.use('/', require("../app/routes/page.server.routes"));
+  app.get('/', require("../app/controllers/page/home.server.controller").index);
+  //菜单页面
+  app.use('/view/page', require("../app/routes/page.server.routes"));
   //帖子页面
-  app.use('/post', require("../app/routes/post.server.routes"));
-  // app.use("/error", require("../app/routes/error.server.routes"));
+  app.use('/view/post', require("../app/routes/post.server.routes"));
 }
 
 module.exports = function(app){
