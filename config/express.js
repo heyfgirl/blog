@@ -60,7 +60,7 @@ module.exports = function(){
       // 没有返回值，返回404
       res.status = 404;
       //非API 非Public静态文件 接口 直接跳转到 404页
-      if(req.path.indexOf("/api") === -1 && req.path.indexOf("/public") === -1){
+      if(req.path.indexOf("/api") === -1 && req.path.indexOf("/404.html") === -1){
         return res.redirect("/404.html");
       }
       return res.json({
