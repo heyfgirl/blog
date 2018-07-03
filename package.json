@@ -1,0 +1,49 @@
+{
+  "name": "mypage_server",
+  "version": "0.0.1",
+  "description": "人主页",
+  "main": "bin/www",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "keywords": [
+    "waterline",
+    "express",
+    "node"
+  ],
+  "author": "heyfgirl@gmail.com",
+  "license": "MIT",
+  "dependencies": {
+    "async": "^2.5.0",
+    "body-parser": "^1.14.1",
+    "compression": "^1.6.1",
+    "cors": "^2.7.1",
+    "ejs": "^2.6.1",
+    "express": "^4.15.3",
+    "express-session": "^1.13.0",
+    "express-xml-bodyparser": "^0.3.0",
+    "generic-pool": "^2.4.0",
+    "jade": "^1.11.0",
+    "jsonwebtoken": "^7.4.1",
+    "log4js": "^1.1.0",
+    "method-override": "~2.3.5",
+    "moment": "^2.12.0",
+    "mongoose": "^5.0.16",
+    "morgan": "^1.7.0",
+    "node-schedule": "^1.2.5",
+    "pug": "^2.0.3",
+    "qiniu": "^6.1.9",
+    "rbac": "^4.0.2",
+    "redis": "^2.6.0-1",
+    "request": "^2.69.0",
+    "sails-mongo": "^0.12.2",
+    "sails-mysql": "^0.11.5",
+    "uuid": "^2.0.1",
+    "waterline": "^0.11.11"
+  },
+  "devDependencies": {}
+}
