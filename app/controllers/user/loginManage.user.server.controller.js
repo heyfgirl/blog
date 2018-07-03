@@ -8,11 +8,10 @@ const jwt = require('jsonwebtoken');
 const uuid = require('uuid');
 const config = require('../../../config/config');
 const redis = require('../../libs/redisSdk').client;
-const commonFunction = require('../../utils/commonFunction');
 const sysLibs = require('../../libs/libs');
 const async = require("async");
 const request = require('request');
-const mongoose = require("../../../config/mongoose");
+const errCode = require("../../../config/errorcode");
 
 module.exports = {
   /**
@@ -51,7 +50,6 @@ module.exports = {
       }
   */
   login: function (req, res, next) {
-    console.log("login===================>")
     if (!req.body.user) return next(sysLibs.err('没有提供用户登录名或者手机号信息'));
     if (!req.body.password) return next(sysLibs.err('没有提供密码信息'));
     var vsf = req.headers.vsf ? req.headers.vsf : 'web';
@@ -206,11 +204,9 @@ module.exports = {
    *
    */
   checkLoginLog: function (req, res, next) {
-    console.log("222222")
-    return next();
     // logger.warn('TOUCH HERE (checkLoginLog)');
-    if (!req.body.user) return next(sysLibs.err('没有提供用户登录名或者手机号信息'));
-    if (!req.body.password) return next(sysLibs.err('没有提供密码信息'));
+    if (!req.body.user) return next(sysLibs.err('没有提供用户登录名或者手机号信息', errCode.PARAM.DEFECT.code));
+    if (!req.body.password) return next(sysLibs.err('没有提供密码信息', errCode.PARAM.DEFECT.code));
     redis.hget(config.login.redisLockedFlag, req.body.user, function (err, rltLoginLockFlag) {
       // logger.debug(err, rltLoginLockFlag);
       if (err) return next(sysLibs.err(err.message));

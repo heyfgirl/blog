@@ -5,8 +5,6 @@
  */
 
 const UserController = require('../controllers/user/user.server.controller');
-const config = require('../../config/config');
-const sysLibs = require('../libs/libs');
 let router = require('express').Router();
 
 router.post('/login', UserController.loginManage.checkLoginLog, UserController.loginManage.login);

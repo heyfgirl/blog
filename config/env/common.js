@@ -39,5 +39,32 @@ module.exports = {
     url: 'http://test.czbapp.com/crmdev/'
   },
   JWT_secret: "czbcrm3790da047dd8a4c75b14cadaf2a55155",
-  logDir: './logs/',
+  //日志文件 log4js配置
+  logConfigure: {
+    appenders: [{
+        type: 'console',
+        layout: {
+          type: 'pattern',
+          pattern: '%[%d %p %m%]'
+        }
+      },{
+        //主日志文件 { 记录全部日志 }
+        type: 'dateFile',
+        filename: `${__dirname}/../../logs/blog-debug`,
+        pattern:"-yyyyMMdd.log",
+        alwaysIncludePattern: true,
+        layout: { type: 'basic' }
+      }
+      // , {
+      //   //分类日志文件，配置不同类别日志到不同文件
+      //   type: 'dateFile',
+      //   filename: `${__dirname}/../../logs/blog-user-debug`,
+      //   pattern:"-yyyyMMdd.log",
+      //   alwaysIncludePattern: true,
+      //   layout: { type: 'basic' },
+      //   level: 'DEBUG',
+      //   category: 'blog'
+      // }
+    ]
+  },
 };
