@@ -6,6 +6,7 @@ const config = require('./config');
 // models
 const LandingPage = require("../app/models/landingpage.server.model");
 const Post = require("../app/models/post.server.model");
+
 const orm = new Waterline();
 const wlconfig = {
   adapters: {

@@ -10,7 +10,7 @@ const moment = require('moment');
 var jwt = require('jsonwebtoken');
 const redis = require('../../libs/redisSdk').client;
 const logger = require("../../libs/log4js");
-var waterline = require('../../../config/waterline');
+// var waterline = require('../../../config/waterline');
 
 module.exports = {
   /**
@@ -20,7 +20,7 @@ module.exports = {
     var token = req.headers.f;
     var vsf = req.headers.vsf ? req.headers.vsf : 'web';
     req.vsf = vsf;
-    
+
     /**
      * req.body参数中，传入空字串的参数预处理
      */
@@ -29,7 +29,7 @@ module.exports = {
         if(req.body[key] === '') delete req.body[key];
       });
     }
-    
+
     //logger.info('token: ', req.headers.f);
     //logger.info('vsf: ', req.headers.vsf);
 

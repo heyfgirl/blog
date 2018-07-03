@@ -4,20 +4,16 @@
  * @Description mongoose配置模块
  */
 const mongoose = require('mongoose');
-const config = require('./config');
-const models = require("./mongoose.models");//加载models
-
+const config = require('../config');
 const connection = mongoose.createConnection(config.mongodb, {autoReconnect: true});
-
 connection.on('error', function(err){
   if(err){
     console.log('err:', err.message);
   }
 });
-
 // ===== model schema import ======
-connection.models = models(connection);
-// ================================
+connection.models = require("./load.models")(connection);
+// ==========加载model结束===========
 
 //监听链接
 connection.on('connecting', function(err, msg){

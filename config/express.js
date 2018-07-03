@@ -6,12 +6,11 @@
 
 const express = require('express');
 const morgan = require('morgan');
-const compression = require('compression');
+// const compression = require('compression');
 const methodOverride = require('method-override');
 const bodyParser = require('body-parser');
 const xmlparser = require('express-xml-bodyparser');
 const cors = require('cors');
-const sysLibs = require('../app/libs/libs');
 
 module.exports = function(){
   console.log('express initialing...');
@@ -29,7 +28,7 @@ module.exports = function(){
   app.set('view engine', 'html');
   // 静态文件
   app.use('/public', express.static('public'));
-  
+
   app.disable('x-powered-by');
 
   app.use(bodyParser.urlencoded({
@@ -52,7 +51,7 @@ module.exports = function(){
   });
 
   // load routes 加载路由==》包括静态文件路径
-  require("../app/routes")(app);
+  require("../config/router")(app);
 
   // 返回数据
   app.use(function(req, res, next){
@@ -60,6 +59,11 @@ module.exports = function(){
     if(!result || result.result === undefined){
       // 没有返回值，返回404
       res.status = 404;
+      //非API接口直接跳转到 404页
+      if(req.path.indexOf("/api") === -1){
+        console.log(req.path);
+        // return res.redirect("/404");
+      }
       return res.json({
         result: 'error',
         data: '操作不存在',

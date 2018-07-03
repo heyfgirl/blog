@@ -4,23 +4,17 @@
  * @Description 网站主页面
  */
 
-const config = require('../../config/config');
-let router = require('express').Router();
+const pageController = require('../controllers/page/home.server.controller');
+const router = require('express').Router();
 
 //网站主页
-router.get("/", function (req, res, next) {
-	return res.render(`menu/index.html`);
-})
-router.get('/page/index.html', function (req, res, next) {
-	return res.redirect("/");
-});
+router.get("/", pageController.index);
+router.get('/page', pageController.index);
+router.get('/page/index', pageController.index);
+router.get('/page/index.html', pageController.index);
 //about页面
-router.get('/page/about.html', function (req, res, next) {
-	return res.render(`menu/about.html`);
-});
+router.get('/page/about.html', pageController.about);
 //contact页面
-router.get('/page/contact.html', function (req, res, next) {
-	return res.render(`menu/contact.html`);
-});
+router.get('/page/contact.html', pageController.contact);
 
 module.exports = router;
