@@ -9,7 +9,6 @@ const uuid = require('uuid');
 const config = require('../../../config/config');
 const redis = require('../../libs/redisSdk').client;
 const sysLibs = require('../../libs/libs');
-const request = require('request');
 const errCode = require("../../../config/errorcode");
 const mongoose = require("../../../config/mongoose");
 const commonFunction = require('../../utils/commonFunction');
@@ -19,7 +18,7 @@ module.exports = {
   /**
    * @api {post} /adveditor/api/landingpage/user/login 对接crm登录接口
    * @apiName user/login
-   * @apiGroup loginManage
+   * @apiGroup user
    * @apiVersion 0.0.1
    *
    * @apiDescription
@@ -34,12 +33,7 @@ module.exports = {
       "data": {
             "result": "success",
             "data": {
-                "token":''
-                "userInfo":{
-                  "id": 114,
-                  "username": "wqiong",
-                  "nickname": "王琼",
-                }
+              id:"111"
             },
             "errCode": 200
       }
@@ -136,43 +130,6 @@ module.exports = {
     });
   },
 };
-/**
- * 调用crm请求接口
- * options:{
- *  hostname : 'test.czbapp.com',
-    port :  80,
-    path : '/crmdev/gm/user/userInfo',
-    method : 'get',
-    headers:{
-      "vsf":'web',
-      "Content-Type":"application/x-www-form-urlencoded",
-    },
-    params:{
-    }
-  }
- *
- */
-function requestData(options, callback) {
-  var option = {
-    url: options.url,
-    headers: options.headers,
-    method: options.method,
-    form: options.params,
-    timeout: 10000,
-  };
-  request(option, function (error, response, body) {
-    if (error) {
-      return callback(error);
-    }
-    try {
-      body = JSON.parse(body);
-      callback(null, body);
-    } catch (err) {
-      callback(err);
-    }
-  });
-}
-
 /**
  * 登录密码错误，更新缓存限制信息函数
  * update Wqiong 2018-05-30T13:49:27+08:00

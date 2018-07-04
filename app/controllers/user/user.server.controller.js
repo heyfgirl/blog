@@ -63,7 +63,7 @@ module.exports = {
     /**
    * @api {get} /adveditor/api/landingpage/user/info 获取用户信息
    * @apiName user/userInfo
-   * @apiGroup loginManage
+   * @apiGroup user
    * @apiVersion 0.0.1
    *
    * @apiSuccessExample 返回示例
@@ -88,5 +88,46 @@ module.exports = {
   userInfo: function (req, res, next) {
     req.result = sysLibs.response(req.userInfo);
     return next();
+  },
+  /**
+   * @api {get} /adveditor/api/landingpage/user/info 获取用户信息
+   * @apiName user/userInfo
+   * @apiGroup user
+   * @apiVersion 0.0.1
+   * @apiParam {String} id  用户id
+   * @apiDescription 冻结账号
+   */
+  blockedAccount: function(req, res, next) {
+    if(!req.body.id){
+      return next(sysLibs.err("缺少参数Id"));
+    }
+    mongoose.models.User
+    .findById(req.body.id)
+    .update({"$set": {isSuspend: true}})
+    .exec(function(err, doc){
+      if(err) return next(sysLibs.err(err.message));
+      req.result = sysLibs.response(doc);
+      return next();
+    });
+  },
+  /**
+   * @api {get} /adveditor/api/landingpage/user/info 获取用户信息
+   * @apiName user/userInfo
+   * @apiGroup user
+   * @apiVersion 0.0.1
+   * @apiParam {String} id  用户id
+   * @apiDescription 冻结账号
+   */
+  deleteAccount: function(req, res, next) {
+    if(!req.body.id){
+      return next(sysLibs.err("缺少参数Id"));
+    }
+    mongoose.models.User
+    .deleteOne({_id: req.body.id})
+    .exec(function(err, doc){
+      if(err) return next(sysLibs.err(err.message));
+      req.result = sysLibs.response(doc);
+      return next();
+    });
   },
 };

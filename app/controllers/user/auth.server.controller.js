@@ -71,7 +71,7 @@ module.exports = {
    * 2. redis中没有，查询数据库，返回数据并设置redis数据
    */
   loadUserInfo: function(uid, cb){
-    redis.hget(config.redisKey.UserInfoMap, `uid_${uid}d`, function(err, rlt_userinfo){
+    redis.hget(config.redisKey.UserInfoMap, `uid_${uid}`, function(err, rlt_userinfo){
       if(err) return cb(err);
       if(rlt_userinfo){
         // redis中存在用户数据，返回
