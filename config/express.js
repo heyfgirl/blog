@@ -54,7 +54,7 @@ module.exports = function(){
   require("../config/router")(app);
 
   // 返回数据
-  app.use(function(req, res, next){
+  app.use(function(req, res){
     let result = req.result || res.result;
     if(!result || result.result === undefined){
       // 没有返回值，返回404

@@ -10,7 +10,6 @@ const moment = require('moment');
 var jwt = require('jsonwebtoken');
 const redis = require('../../libs/redisSdk').client;
 const logger = require("../../libs/log4js");
-// var waterline = require('../../../config/waterline');
 
 module.exports = {
   /**
@@ -30,9 +29,6 @@ module.exports = {
       });
     }
 
-    //logger.info('token: ', req.headers.f);
-    //logger.info('vsf: ', req.headers.vsf);
-
     if(!token) return next(sysLibs.err('参数不足，缺少验证信息',500));
     //验证token
     jwt.verify(token, config.JWT_secret, function(err, decoded){
@@ -43,7 +39,7 @@ module.exports = {
       var t_exp = parseInt(moment().startOf('day').valueOf() / 1000);
       if(decoded.exp<t_exp) return next(sysLibs.err('会话信息已过期,请重新登陆',500));
 
-      redis.hget(config.redisKey.landingPageLoginInfoMap, `uid_${decoded.uid}`, function(err, loginInfo){
+      redis.hget(config.redisKey.LoginInfoMap, `uid_${decoded.uid}`, function(err, loginInfo){
         if(err) return next(sysLibs.err((err.message||err),(err.code||500)));
         if(!loginInfo) return next(sysLibs.err('用户未登录',500));
         try{
@@ -73,7 +69,7 @@ module.exports = {
    * 2. redis中没有，查询数据库，返回数据并设置redis数据
    */
   loadUserInfo: function(uid, cb){
-    redis.hget(config.redisKey.landingPageUserInfoMap, `uid_${uid}`, function(err, rlt_userinfo){
+    redis.hget(config.redisKey.UserInfoMap, `uid_${uid}`, function(err, rlt_userinfo){
       if(err) return cb(err);
       if(rlt_userinfo){
         // redis中存在用户数据，返回
