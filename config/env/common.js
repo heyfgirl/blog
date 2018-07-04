@@ -38,6 +38,7 @@ module.exports = {
     //登陆接口URL
     url: 'http://test.czbapp.com/crmdev/'
   },
+  //token密钥
   JWT_secret: "czbcrm3790da047dd8a4c75b14cadaf2a55155",
   //日志文件 log4js配置
   logConfigure: {

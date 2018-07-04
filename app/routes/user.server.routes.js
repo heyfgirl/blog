@@ -7,8 +7,8 @@
 const UserController = require('../controllers/user/user.server.controller');
 let router = require('express').Router();
 
-router.post('/add', /*UserController.auth.loadSession,*/ UserController.create);
+router.post('/create', /*UserController.auth.loadSession,*/ UserController.create);
 router.post('/login', UserController.loginManage.checkLoginLog, UserController.loginManage.login);
-router.post('/info', UserController.auth.loadSession, UserController.loginManage.userInfo);
+router.post('/info', UserController.auth.loadSession, UserController.userInfo);
 
 module.exports = router;

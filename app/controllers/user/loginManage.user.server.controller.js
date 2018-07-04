@@ -9,9 +9,11 @@ const uuid = require('uuid');
 const config = require('../../../config/config');
 const redis = require('../../libs/redisSdk').client;
 const sysLibs = require('../../libs/libs');
-const async = require("async");
 const request = require('request');
 const errCode = require("../../../config/errorcode");
+const mongoose = require("../../../config/mongoose");
+const commonFunction = require('../../utils/commonFunction');
+const logger = require("../../libs/log4js");
 
 module.exports = {
   /**
@@ -53,140 +55,39 @@ module.exports = {
     if (!req.body.user) return next(sysLibs.err('没有提供用户登录名或者手机号信息'));
     if (!req.body.password) return next(sysLibs.err('没有提供密码信息'));
     var vsf = req.headers.vsf ? req.headers.vsf : 'web';
-    async.auto({
-      //获取登录token
-      getCrmToken: function (cb) {
-        //登陆crm 接口http配置
-        let crm_login_options = {
-          url: config.login.url + 'gm/user/login',
-          method: 'POST',
-          headers: {
-            vsf: vsf,
-            "Content-Type": "application/x-www-form-urlencoded",
-          },
-          params: {
-            password: req.body.password,
-            user: req.body.user,
-            vsf: vsf
-          }
+    let query={
+      $or:[{email: req.body.user}, {mobile: req.body.user}, {username: req.body.user}],
+    };
+    mongoose.models.User.findOne(query, function(err, uInfo){
+      if(err) return next(sysLibs.err(err.message));
+      if(!uInfo) return next(sysLibs.err("查询不到该账号用户信息"));
+      let password = commonFunction.md5String(req.body.password + uInfo.salt);
+      // let password = req.body.password;
+      if(password !== uInfo.password){
+         // 密码错误，记录缓存限制信息，返回错误
+         updateRedisLockFlag(req.body.user);
+         logger.error("用户登陆密码错误  [user]:", req.body.user, "[password]:", req.body.password);
+         return next(sysLibs.err("密码错误"));
+      }else{
+        updateRedisLockFlag(req.body.user,true);
+        // 设置token过期时间
+        let t_exp = parseInt(moment().startOf('day').add(1, 'day').valueOf() / 1000);
+        let tokenInfo = {
+          uid: uInfo.id, //用户Id
+          f: uuid(), //tokenId
+          exp: t_exp, //过期时间
+          vsf: vsf //登陆来源
         };
-        requestData(crm_login_options, (err, rlt_user_login_token) => {
-          if (err) return cb(err);
-          if (!rlt_user_login_token || !rlt_user_login_token.data || !rlt_user_login_token.data.token) return cb('用户不存在');
-          console.log();
-          // 通过token获取用户信息
-          let options = {
-            token: rlt_user_login_token.data.token,
-            vsf: vsf
-          };
-          return cb(null, options);
+        let token = jwt.sign(tokenInfo, config.JWT_secret);
+        uInfo.checkInfo = { key: vsf, value: tokenInfo.f, exp: tokenInfo.exp }; //token的校验信息 临时存储在用户信息中
+        t_login(uInfo, function(err){
+          if(err) return next(sysLibs.err(err.message));
+          req.result = sysLibs.response(token);
+          return next();
         });
-      },
-      //通过token获取用户信息
-      getUserInfo: ['getCrmToken', function (result, cb) {
-        //获取信息 接口http配置
-        let crm_token_user_options = {
-          url: config.login.url + 'gm/user/userInfo',
-          // url: 'http://crm.czbapp.com/gm/user/userInfo',
-          method: 'get',
-          headers: {
-            f: result.getCrmToken.token,
-            vsf: vsf
-          }
-        };
-        requestData(crm_token_user_options, (err, rlt_user_info) => {
-          if (err) return cb(err);
-          if (!rlt_user_info || !rlt_user_info.data || !rlt_user_info.data.username || rlt_user_info.code != 200) return cb('token获取信息失败');
-          let rlt_user_login = rlt_user_info.data;
-          if (rlt_user_login.isSuspend) return cb('用户被冻结');
-
-          if (rlt_user_login.type.length === 0) {
-            // sysLog('user', 'login', '[post]/gm/user/login', rlt_user_login.username, '用户类型错误，无法登录');
-            return cb('用户类型错误，无法登录');
-          }
-          if (rlt_user_login.type.indexOf('admin') !== -1 && !rlt_user_login.adminId) {
-            // sysLog('user', 'login', '[post]/gm/user/login', rlt_user_login.username, '查询不到管理员用户信息，无法登录');
-            return cb('查询不到管理员用户信息，无法登录');
-          }
-          if (rlt_user_login.type.indexOf('admin') === -1 && rlt_user_login.adminId) {
-            // 不是管理员角色类型，有管理员用户信息，不给出来
-            delete rlt_user_login.adminId;
-          }
-          if (rlt_user_login.type.indexOf('employee') !== -1 && !rlt_user_login.employeeId) {
-            // sysLog('user', 'login', '[post]/gm/user/login', rlt_user_login.username, '查询不到业务人员用户信息，无法登录');
-            return cb('查询不到业务人员用户信息，无法登录');
-          }
-          if (rlt_user_login.type.indexOf('employee') === -1 && rlt_user_login.employeeId) {
-            // 不是管理员角色类型，有管理员用户信息，不给出来
-            delete rlt_user_login.employeeId;
-          }
-          // 设置过期时间到今天结束
-          var t_exp = parseInt(moment().startOf('day').add(1, 'day').valueOf() / 1000);
-          var uinfo = { uid: rlt_user_login.id, f: uuid.v1(), exp: t_exp, vsf: vsf };
-          var localToken = jwt.sign(uinfo, config.JWT_secret);
-          rlt_user_login.checkInfo = { key: vsf, value: uinfo.f, exp: uinfo.exp };
-          return cb(null, { token: localToken, userInfo: rlt_user_login });
-        });
-      }]
-    }, function (err, result) {
-      //更改redis中用户信息
-      if (err) {
-        updateRedisLockFlag(req.body.user);
-        return next(sysLibs.err(err.message));
       }
-      //token登陆设置redis
-      t_login(result.getUserInfo.userInfo, function (err) {
-        if (err) return next(sysLibs.err(err.message));
-        req.userInfo = result.getUserInfo.userInfo;
-        updateRedisLockFlag(req.body.user, true);
-        //返回token和用户信息
-        req.result = sysLibs.response(result.getUserInfo);
-        return next();
-      });
     });
   },
-  /**
-   * @api {get} /adveditor/api/landingpage/user/info 获取用户信息
-   * @apiName user/userInfo
-   * @apiGroup loginManage
-   * @apiVersion 0.0.1
-   *
-   * @apiSuccessExample 返回示例
-      HTTP/1.1 200 OK
-      "data": {
-            "result": "success",
-            "data": {
-              "id": 114,
-              "username": "wqiong",
-              "nickname": "王琼",
-            },
-            "errCode": 200
-      }
-   * @apiErrorExample 错误示例
-      HTTP/1.1 500 Internal Server Error
-      "data": {
-        result: 'error',
-        data: err.message,
-        errCode: err.code,
-      }
-  */
-  userInfo: function (req, res, next) {
-    req.result = sysLibs.response({
-      id: req.userInfo.id,
-      username: req.userInfo.username,
-      nickname: req.userInfo.nickname,
-      headImg: req.userInfo.headImg,
-      headImgUrl: req.userInfo.headImgUrl,
-      mobi: req.userInfo.mobi,
-      type: req.userInfo.type,
-      employeeId: req.userInfo.employeeId,
-      adminId: req.userInfo.adminId,
-      createdAt: req.userInfo.createdAt,
-      createdBy: req.userInfo.createdBy
-    });
-    return next();
-  },
-
   /**
    * 检查登录限制日志中间件，主要负责尝试失败次数过多之后的限制登录问题
    *
@@ -323,6 +224,8 @@ function t_login(uinfo, cb) {
     //logger.debug('tokenInfo: ', tokenInfo);
     delete uinfo.checkInfo;
     // uinfo.headImgUrl = uinfo.headImgUrl();
+    delete uinfo.salt;
+    delete uinfo.password;
     redis.hset(config.redisKey.UserInfoMap, `uid_${uinfo.id}`, JSON.stringify(uinfo));
     redis.hset(config.redisKey.LoginInfoMap, `uid_${uinfo.id}`, JSON.stringify(tokenInfo));
     return cb(null);

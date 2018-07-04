@@ -6,10 +6,18 @@
  */
 module.exports = {
   USER: {
+    SESSION_EXPIRED:{
+      code: 1001,
+      desc: "会话过期"
+    },
+    AUTH_FAIL: {
+      code: 1002,
+      desc: "会话验证失败"
+    }
   },
   PARAM: {
     DEFECT: {
-      code: 1001,
+      code: 2001,
       desc: "参数缺失"
     }
   }

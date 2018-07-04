@@ -10,6 +10,7 @@ const sysLibs = require('../../libs/libs');
 const waterline = require("../../../config/waterline");
 const logger = require("../../libs/log4js");
 const request = require("request");
+const commonFunction = require('../../utils/commonFunction');
 
 module.exports = {
   /**

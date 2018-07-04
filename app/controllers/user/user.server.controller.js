@@ -5,7 +5,10 @@
  */
 const loginManageImp = require('./loginManage.user.server.controller');
 const authImp = require('./auth.server.controller');
-// const mongoose = require("../../../config/mongoose/mongoose");
+const sysLibs = require("../../libs/gen.result");
+const mongoose = require("../../../config/mongoose");
+const errCode = require("../../../config/errorcode");
+const commonFunction = require('../../utils/commonFunction');
 
 module.exports = {
   loginManage: loginManageImp,
@@ -38,8 +41,52 @@ module.exports = {
       }
   */
   create: function(req, res, next){
-    // let 
-    console.log(req.render);
-    return res.json({dd:555});
-  }
+    //
+    if(!req.body.email && !req.body.mobile){
+      return next(sysLibs.err('未传入邮箱或者手机参数', errCode.PARAM.DEFECT));
+    }
+    if(!req.body.password){
+      return next(sysLibs.err('未传入密码', errCode.PARAM.DEFECT));
+    }
+    //生成4位数的盐
+    let salt = commonFunction.randomString(4);
+    req.body.password = commonFunction.md5String(req.body.password + salt);
+    req.body.salt = salt;
+    mongoose.models.User.create(req.body, function(err, doc){
+      if(err){
+        return next(sysLibs.err(err.message));
+      }
+      req.result = sysLibs.response(doc);
+      return next();
+    });
+  },
+    /**
+   * @api {get} /adveditor/api/landingpage/user/info 获取用户信息
+   * @apiName user/userInfo
+   * @apiGroup loginManage
+   * @apiVersion 0.0.1
+   *
+   * @apiSuccessExample 返回示例
+      HTTP/1.1 200 OK
+      "data": {
+            "result": "success",
+            "data": {
+              "id": 114,
+              "username": "wqiong",
+              "nickname": "王琼",
+            },
+            "errCode": 200
+      }
+   * @apiErrorExample 错误示例
+      HTTP/1.1 500 Internal Server Error
+      "data": {
+        result: 'error',
+        data: err.message,
+        errCode: err.code,
+      }
+  */
+  userInfo: function (req, res, next) {
+    req.result = sysLibs.response(req.userInfo);
+    return next();
+  },
 };

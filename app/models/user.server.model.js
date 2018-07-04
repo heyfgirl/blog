@@ -18,6 +18,18 @@ module.exports = new Schema({
       enum: [0, 1, 2],
       default: 0
     },
+    //盐
+    salt: String,
+    //手机号
+    mobile: String,
+    //邮箱
+    email: String,
+    //密码
+    password: String,
+    //是否被冻结
+    isSuspend: {
+      type: Boolean
+    },
     // 课件包
     role: {type: Schema.Types.ObjectId, ref: 'Role'}
   },
