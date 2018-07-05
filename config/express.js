@@ -81,11 +81,12 @@ module.exports = function(){
     }
     console.log('request 500 err:', err.message, err.stack);
     res.status(500);
-    return res.json({
+    res.json({
       result: 'error',
       data: err.message,
       errCode: err.code,
     });
+    return next();
   });
 
   return app;

@@ -5,11 +5,10 @@
  * @Description emnu页面渲染服务
  */
 module.exports = {
-  index: function(req, res){
+  index: function(req, res, next){
     if(req.url !== "/"){
       return res.redirect("/");
     }
-    new Error("DDDD");
     return res.render(`menu/index.html`);
   },
   about: function(req, res){
