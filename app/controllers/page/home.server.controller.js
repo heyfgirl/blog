@@ -9,12 +9,18 @@ module.exports = {
     if(req.url !== "/"){
       return res.redirect("/");
     }
-    return res.render(`menu/index.html`);
+    return res.render(`menu/index.html`,{
+
+    });
   },
   about: function(req, res){
-    return res.render(`menu/about.html`);
+    return res.render(`menu/about.html`,{
+
+    });
   },
   contact: function(req, res){
-    return res.render(`menu/contact.html`);
+    return res.render(`menu/contact.html`,{
+
+    });
   }
 };

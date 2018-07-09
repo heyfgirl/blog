@@ -22,8 +22,12 @@ connection.on('connecting', function(err, msg){
 connection.on('disconnected', function(err, msg){
   console.log('disconnected: ',err, msg);
 });
-connection.on('connected', function(err, msg){
-  console.log('connected: ',err, msg);
+connection.on('connected', function(err){
+  if(err){
+    console.log(`connected => 启动数据库出现错误; err => ${err}`);
+  }else{
+    console.log('connected: ', "启动数据库完成!");
+  }
 });
 connection.on('disconnecting', function(err, msg){
   console.log('disconnecting: ',err, msg);

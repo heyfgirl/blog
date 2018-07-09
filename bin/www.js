@@ -2,9 +2,25 @@
 
 const app = require('../app');
 const config = require('../config/config');
-app.listen(config.port, function(){
-  console.log('Express listening on port:', config.port);
-});
+
+const cluster = require('cluster');
+const numCPUs = require("os").cpus().length;
+const Process = [];
+if (cluster.isMaster) {
+  for(let i = 0; i < numCPUs; i++){
+    const worker = cluster.fork();
+    Process.push(worker);
+    worker.send('hi there');
+  }
+  cluster.on('exit', function(worker, code, signal) {
+    console.log('worker ' + worker.process.pid + ' died' + signal);
+  });
+  console.log(cluster.workers);
+}else{
+  app.listen(config.port, function(){
+    console.log('Express listening on port:', config.port);
+  });
+}
 
 //const waterline = require('../config/waterline');
 //waterline.orm.initialize(waterline.config, function(err, models){
