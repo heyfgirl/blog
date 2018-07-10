@@ -46,7 +46,6 @@ module.exports = function(){
   app.use(cors());
 
   app.use(function(req, res, next){
-    console.log(process.pid);
     req.result = {};
     next();
   });
