@@ -1,3 +1,4 @@
+'use strict';
 //#!/usr/bin/env node
 const express = require('./config/express');
 const app = express();

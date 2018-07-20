@@ -10,7 +10,72 @@ module.exports = {
       return res.redirect("/");
     }
     return res.render(`menu/index.html`,{
-
+      portfolio: [
+        {
+          filter: 'f_stray',
+          title: '和氣質哦',
+          mood: '大大方方'
+        },
+        {
+          filter: 'f_stray',
+          title: '和氣質哦',
+          mood: '大大方方'
+        },
+        {
+          filter: 'f_city',
+          title: '和氣質哦',
+          mood: '大大方方'
+        }
+      ],
+      latest: [
+        {
+          title: 'Creative Revolution',
+          time: 'June 20,',
+          comment: '0 Comments',
+          content: `A blanditiis, ab. Commodi at provident necess itatibus animi consequuntur veritatis nesciunt, totam, natus quo
+            saepe cupiditate molitia eveniet iste deleniti. . .`,
+          id: '123',
+          commentId: '123'
+        },
+        {
+          title: 'Creative Revolution',
+          time: 'June 20,',
+          comment: '0 Comments',
+          content: `A blanditiis, ab. Commodi at provident necess itatibus animi consequuntur veritatis nesciunt, totam, natus quo
+            saepe cupiditate molitia eveniet iste deleniti. . .`,
+          id: '123',
+          commentId: '123'
+        },
+        {
+          id: '123',
+          commentId: '123',
+          title: 'Creative Revolution',
+          time: 'June 20,',
+          comment: '0 Comments',
+          content: `A blanditiis, ab. Commodi at provident necess itatibus animi consequuntur veritatis nesciunt, totam, natus quo
+            saepe cupiditate molitia eveniet iste deleniti. . .`
+        },
+      ],
+      testimonial:[
+        {
+          content: `A blanditiis, ab. Commodi at provident necess itatibus animi consequuntur veritatis nesciunt, totam, natus quo
+          saepe cupiditate molitia eveniet iste deleniti. . .`,
+          author: 'Adamy Smith',
+          authorTitle: 'Doe CEO'
+        },
+        {
+          content: `A blanditiis, ab. Commodi at provident necess itatibus animi consequuntur veritatis nesciunt, totam, natus quo
+          saepe cupiditate molitia eveniet iste deleniti. . .`,
+          author: 'Adamy Smith',
+          authorTitle: 'Doe CEO'
+        },
+        {
+          content: `A blanditiis, ab. Commodi at provident necess itatibus animi consequuntur veritatis nesciunt, totam, natus quo
+          saepe cupiditate molitia eveniet iste deleniti. . .`,
+          author: 'Adamy Smith',
+          authorTitle: 'Doe CEO'
+        }
+      ]
     });
   },
   about: function(req, res){

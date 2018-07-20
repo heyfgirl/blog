@@ -10,6 +10,11 @@ module.exports = new Schema({
     code: String,
     // 角色名称
     name: String,
+    // 分配权限
+    authorization: {
+      type: Array,
+      default: []
+    }
   },
   {
     timestamps: true,
