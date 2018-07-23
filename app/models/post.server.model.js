@@ -19,6 +19,6 @@ module.exports = Waterline.Collection.extend({
     //博客类型 有相册类型 1:为相册类型 album
     type: 'string',
     img: 'string',
-
+    
   }
 });
