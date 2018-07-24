@@ -80,7 +80,7 @@ module.exports = function(){
       return res.json('完全不知道发生了什么...');
     }
     console.log('request 500 err:', err.message, err.stack);
-    res.status(err.errCode || 500);
+    res.status(err.code || 500);
     res.json({
       result: 'error',
       data: err.message,
