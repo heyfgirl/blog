@@ -54,7 +54,7 @@ module.exports = {
     };
     mongoose.models.User.findOne(query, function(err, uInfo){
       if(err) return next(sysLibs.err(err.message));
-      if(!uInfo) return next(sysLibs.err("查询不到该账号用户信息"));
+      if(!uInfo) return next(sysLibs.err("查询不到该账号用户信息"), 2001);
       let password = commonFunction.md5String(req.body.password + uInfo.salt);
       // let password = req.body.password;
       if(password !== uInfo.password){
