@@ -5,7 +5,7 @@
  * @Description emnu页面渲染服务
  */
 module.exports = {
-  index: function(req, res, next){
+  index: function(req, res){
     if(req.url !== "/"){
       return res.redirect("/");
     }
@@ -14,17 +14,23 @@ module.exports = {
         {
           filter: 'f_stray',
           title: '和氣質哦',
-          mood: '大大方方'
+          mood: '大大方方',
+          img: 'https://wangqiong.me/public/img/ptf/1.jpg',
+          link: '/',
         },
         {
           filter: 'f_stray',
           title: '和氣質哦',
-          mood: '大大方方'
+          mood: '大大方方',
+          img: 'https://wangqiong.me/public/img/ptf/1.jpg',
+          link: '/',
         },
         {
           filter: 'f_city',
           title: '和氣質哦',
-          mood: '大大方方'
+          mood: '大大方方',
+          img: 'https://wangqiong.me/public/img/ptf/1.jpg',
+          link: '/',
         }
       ],
       latest: [

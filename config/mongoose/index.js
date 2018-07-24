@@ -8,7 +8,7 @@ const config = require('../config');
 const connection = mongoose.createConnection(config.mongodb, {autoReconnect: true});
 connection.on('error', function(err){
   if(err){
-    console.log('err:', err.message);
+    console.log(`connected => 启动数据库出现错误; err => ${err}`);
   }
 });
 // ===== model schema import ======

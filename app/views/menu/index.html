@@ -88,12 +88,12 @@
 								<article class="portfolio-item-wrap <%= item.filter %>">
 									<div class="portfolio-item">
 										<div class="portfolio-img">
-											<img src="https://wangqiong.me/public/img/ptf/1.jpg" alt="">
+											<img src="<%= item.img %>" alt="">
 										</div>
 										<div class="portfolio-content-wrap">
 											<div class="potfolio-content">
 												<h6 class="portfolio-title">
-													<a href="https://wangqiong.me/public/work_single.html" class="animsition-link"><%= item.title %></a>
+													<a href="<%= item.link %>" class="animsition-link"><%= item.title %></a>
 												</h6>
 												<div class="portfolio-categories"><%= item.mood %></div>
 											</div>
