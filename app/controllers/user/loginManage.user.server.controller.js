@@ -99,6 +99,7 @@ module.exports = {
    *
    */
   checkLoginLog: function (req, res, next) {
+    req.body.user = req.body.username || req.body.user || req.body.email || req.body.mobile || null;
     // logger.warn('TOUCH HERE (checkLoginLog)');
     if (!req.body.user) return next(sysLibs.err('没有提供用户登录名或者手机号信息', errCode.PARAM.DEFECT.code));
     if (!req.body.password) return next(sysLibs.err('没有提供密码信息', errCode.PARAM.DEFECT.code));
