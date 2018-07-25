@@ -6,7 +6,8 @@
 
 //数据获取的API路由
 function apiRoute(app){
-  app.use('/api/auth', require("../app/routes/user.server.routes"));
+  app.use('/api/auth', require("../app/routes/auth.server.routes"));
+  app.use('/api/user', require("../app/routes/user.server.routes"));
 }
 
 //渲染页面的VIEW路由
