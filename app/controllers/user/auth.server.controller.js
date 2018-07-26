@@ -31,7 +31,7 @@ module.exports = {
       });
     }
 
-    if(!token) return next(sysLibs.err('参数不足，缺少验证信息', errCode.PARAM.DEFECT));
+    if(!token) return next(sysLibs.err('参数不足，缺少验证信息', errCode.PARAM.DEFECT.code));
     //验证token
     jwt.verify(token, config.JWT_secret, function(err, decoded){
       //logger.debug(err, decoded);

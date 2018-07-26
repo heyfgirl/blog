@@ -16,12 +16,6 @@ connection.models = require("./load.models")(connection);
 // ==========加载model结束===========
 
 //监听链接
-connection.on('connecting', function(err, msg){
-  console.log('connecting: ',err, msg);
-});
-connection.on('disconnected', function(err, msg){
-  console.log('disconnected: ',err, msg);
-});
 connection.on('connected', function(err){
   if(err){
     console.log(`connected => 启动数据库出现错误; err => ${err}`);

@@ -22,6 +22,8 @@ module.exports = new Schema({
   type: String,
   //封面
   image: String,
+  //摘要
+  abstract: String,
   //内容
   content: Schema.Types.Mixed,
   },
