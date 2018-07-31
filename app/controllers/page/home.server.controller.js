@@ -20,11 +20,11 @@ module.exports = {
         .limit(9)
         .sort({createdAt: -1})
         .select({title: 1, filter: 1, mood: 1, image: 1, _id: 1})
-        .exec(function(err, doc){
+        .exec(function(err, docs){
           if(err){
             return cb(err);
           }
-          return cb(null, doc);
+          return cb(null, docs);
         });
       },
       getLatest: function(cb){
@@ -34,33 +34,21 @@ module.exports = {
         .limit(3)
         .sort({createdAt: -1})
         .select({title: 1, time: 1, commentCnt: 1, abstract: 1})
-        .exec(function(err, doc){
+        .exec(function(err, docs){
           if(err){
             return cb(err);
           }
-          return cb(null, doc);
+          return cb(null, docs);
         });
       },
       getTestimonial: function(cb){
         let testimonial = [
           {
-            content: `A blanditiis, ab. Commodi at provident necess itatibus animi consequuntur veritatis nesciunt, totam, natus quo
-            saepe cupiditate molitia eveniet iste deleniti. . .`,
-            author: 'Adamy Smith',
-            authorTitle: 'Doe CEO'
+            content: `我是个蒸不烂、煮不熟、捶不匾、炒不爆、
+            响珰珰一粒铜豌豆！`,
+            author: '关汉卿',
+            authorTitle: '已斋'
           },
-          {
-            content: `A blanditiis, ab. Commodi at provident necess itatibus animi consequuntur veritatis nesciunt, totam, natus quo
-            saepe cupiditate molitia eveniet iste deleniti. . .`,
-            author: 'Adamy Smith',
-            authorTitle: 'Doe CEO'
-          },
-          {
-            content: `A blanditiis, ab. Commodi at provident necess itatibus animi consequuntur veritatis nesciunt, totam, natus quo
-            saepe cupiditate molitia eveniet iste deleniti. . .`,
-            author: 'Adamy Smith',
-            authorTitle: 'Doe CEO'
-          }
         ];
         return cb(null, testimonial);
       }
@@ -72,54 +60,21 @@ module.exports = {
         portfolio: [
           {
             filter: 'f_stray',
-            title: '和氣質哦',
-            mood: '大大方方',
+            title: '梦里花落知多少',
+            mood: '来来去去',
             img: 'https://wangqiong.me/public/img/ptf/1.jpg',
             link: '/',
           },
-          {
-            filter: 'f_stray',
-            title: '和氣質哦',
-            mood: '大大方方',
-            img: 'https://wangqiong.me/public/img/ptf/1.jpg',
-            link: '/',
-          },
-          {
-            filter: 'f_city',
-            title: '和氣質哦',
-            mood: '大大方方',
-            img: 'https://wangqiong.me/public/img/ptf/1.jpg',
-            link: '/',
-          }
         ],
         latest: [
-          {
-            title: 'Creative Revolution',
-            time: 'June 20,',
-            comment: '0 Comments',
-            content: `A blanditiis, ab. Commodi at provident necess itatibus animi consequuntur veritatis nesciunt, totam, natus quo
-              saepe cupiditate molitia eveniet iste deleniti. . .`,
-            id: '123',
-            commentId: '123'
-          },
-          {
-            title: 'Creative Revolution',
-            time: 'June 20,',
-            comment: '0 Comments',
-            content: `A blanditiis, ab. Commodi at provident necess itatibus animi consequuntur veritatis nesciunt, totam, natus quo
-              saepe cupiditate molitia eveniet iste deleniti. . .`,
-            id: '123',
-            commentId: '123'
-          },
-          {
-            id: '123',
-            commentId: '123',
-            title: 'Creative Revolution',
-            time: 'June 20,',
-            comment: '0 Comments',
-            content: `A blanditiis, ab. Commodi at provident necess itatibus animi consequuntur veritatis nesciunt, totam, natus quo
-              saepe cupiditate molitia eveniet iste deleniti. . .`
-          },
+          // {
+          //   title: '',
+          //   time: 'June 20,',
+          //   comment: '0 Comments',
+          //   content: `. . .`,
+          //   id: '123',
+          //   commentId: '123'
+          // },
         ],
         testimonial: results.getTestimonial
       });
