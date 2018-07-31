@@ -67,14 +67,14 @@ module.exports = {
           },
         ],
         latest: [
-          // {
-          //   title: '',
-          //   time: 'June 20,',
-          //   comment: '0 Comments',
-          //   content: `. . .`,
-          //   id: '123',
-          //   commentId: '123'
-          // },
+          {
+            title: `c'est la vie！`,
+            time: 'June 20,',
+            comment: '0 Comments',
+            content: `Danger itself the best remedy of danger. . .`,
+            id: '123',
+            commentId: '123'
+          },
         ],
         testimonial: results.getTestimonial
       });
