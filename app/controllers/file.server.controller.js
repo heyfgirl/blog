@@ -6,9 +6,9 @@ const qiniu = require('qiniu');
 const uuid = require('uuid');
 
 const path = require('path');
-const url = require('url');
-const request = require('request');
-const fs = require('fs');
+// const url = require('url');
+// const request = require('request');
+// const fs = require('fs');
 const sysLibs = require('../libs/libs');
 var config = require('../../config/config');
 
@@ -50,7 +50,7 @@ function createUploadKey(filename, ifSecure) {
  * @apiName qiniu/uploadkey
  * @apiGroup qiniu
  * @apiVersion 0.0.1
- * 
+ *
  * @apiParam {String} filename 原文件名
  * @apiParam {String} type     图片用途类别 header
  * @apiSuccessExample 返回示例
@@ -130,7 +130,7 @@ exports.qiniuCallback = function (req, res, next) {
   if (spt[0] !== config.qiniu.ak) {
     isAuthorizationError = true;
   }
-  // @todo check encoded_data in authorization 
+  // @todo check encoded_data in authorization
   // http://developer.qiniu.com/article/kodo/kodo-developer/up/response-types.html
   if (isAuthorizationError) {
     return next(sysLibs.err('authorization error', 500));
@@ -141,4 +141,4 @@ exports.qiniuCallback = function (req, res, next) {
     isUpload: true
   });
   return next();
-}
+};

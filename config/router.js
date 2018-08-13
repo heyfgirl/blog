@@ -8,6 +8,7 @@
 function apiRoute(app){
   app.use('/api/auth', require("../app/routes/auth.server.routes"));
   app.use('/api/user', require("../app/routes/user.server.routes"));
+  app.use('/api/ueditor', require("../app/routes/ueditor.server.routes"));
 }
 
 //渲染页面的VIEW路由
