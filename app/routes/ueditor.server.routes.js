@@ -6,7 +6,7 @@
 
 let router = require('express').Router();
 
-router.get('/config', /*UserController.auth.loadSession,*/ (req, res) => {
+router.get('/api/ueditor/config', /*UserController.auth.loadSession,*/ (req, res) => {
   let config = require("../../public/js/ueditorConfig");
   return res.json(config);
 });

@@ -9,9 +9,10 @@ const router = require('express').Router();
 
 //网站主页
 router.get("/", pageController.index);
+router.get("/view/page/", pageController.index);
 //about页面
-router.get('/about.html', pageController.about);
+router.get('/view/page/about.html', pageController.about);
 //contact页面
-router.get('/contact.html', pageController.contact);
+router.get('/view/page/contact.html', pageController.contact);
 
 module.exports = router;

@@ -7,9 +7,9 @@
 const UserController = require('../controllers/user/user.server.controller');
 let router = require('express').Router();
 
-router.post('/create', /*UserController.auth.loadSession,*/ UserController.create);
-router.get('/info', UserController.auth.loadSession, UserController.userInfo);
-router.post('/blocked', /*UserController.auth.loadSession,*/ UserController.blockedAccount);
-router.post('/delete', /*UserController.auth.loadSession,*/ UserController.deleteAccount);
+router.post('/api/user/create', /*UserController.auth.loadSession,*/ UserController.create);
+router.get('/api/user/info', UserController.auth.loadSession, UserController.userInfo);
+router.post('/api/user/blocked', /*UserController.auth.loadSession,*/ UserController.blockedAccount);
+router.post('/api/user/delete', /*UserController.auth.loadSession,*/ UserController.deleteAccount);
 
 module.exports = router;

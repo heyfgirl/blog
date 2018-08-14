@@ -21,7 +21,7 @@ module.exports = {
    * @apiParam {String} name  落地页名称
    * @apiParam {String} [linkUrl] 链接地址
    * @apiParam {Json} [content]  落地页内容
-   * 
+   *
    * @apiSuccessExample 返回示例
       HTTP/1.1 200 OK
       "data": {
@@ -32,7 +32,7 @@ module.exports = {
         },
         errCode: code,
       }
-      errCode: 
+      errCode:
         '0': '用户添加成功'
         '500': '系统错误，请联系管理员'
         '1001': '缺少认证参数'
@@ -94,10 +94,10 @@ module.exports = {
       data: err.message,
       errCode: err.code,
      }
-   * 
+   *
    * @apiDescription
    * 假删落地页
-   * 
+   *
    * @apiParam {String} id  落地页Id
   */
   delLandingPage: (req, res, next) => {

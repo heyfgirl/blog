@@ -7,6 +7,6 @@
 const UserController = require('../controllers/user/user.server.controller');
 let router = require('express').Router();
 
-router.post('/login', UserController.loginManage.checkLoginLog, UserController.loginManage.login);
+router.post('/api/auth/login', UserController.loginManage.checkLoginLog, UserController.loginManage.login);
 
 module.exports = router;

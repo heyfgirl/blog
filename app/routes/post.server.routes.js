@@ -9,7 +9,7 @@ const mongoose = require("../../config/mongoose");
 const sysLibs = require("../libs/gen.result");
 const logger = require("../libs/log4js");
 
-router.get('/adveditor/test/version', function(req, res, next){
+router.get('/view/post/adveditor/test/version', function(req, res, next){
   mongoose.models.User.create({name: "王琼", nickname: "wqiong", username: "顶顶顶顶"}, function(err, doc){
     if(err){
       console.log(err);
@@ -24,7 +24,7 @@ router.get('/adveditor/test/version', function(req, res, next){
   // })
 });
 
-router.get('/adveditor/test/stime', function(req, res, next){
+router.get('/view/post/adveditor/test/stime', function(req, res, next){
   (function haha(){
     logger.info("显示时间");
   })();
