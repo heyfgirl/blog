@@ -10,7 +10,6 @@ module.exports = function(app){
   //帖子页面
   app.use(require("../app/routes/post.server.routes"));
 
-
   //api路由
   app.use(require("../app/routes/auth.server.routes"));
   app.use(require("../app/routes/user.server.routes"));

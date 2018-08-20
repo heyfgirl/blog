@@ -4,11 +4,11 @@
  * @Description 落地页路由模块
  */
 
-const FileController = require('../controllers/file.server.controller');
+let router = require('express').Router();
+//上传文件
+router.get('/api/upload', /*UserController.auth.loadSession,*/ (req, res) => {
+  let config = require("../../public/js/ueditorConfig");
+  return res.json(config);
+});
 
-module.exports = function(app){
-  app.get('/adveditor/api/file/upload/key', FileController.getUploadKey);
-  app.post('/adveditor/api/file/upload/callback', FileController.qiniuCallback);
-
-  // app.get('/api/file/getDownloadUrl', FileController.getDownloadUrlSecure);
-};
+module.exports = router;

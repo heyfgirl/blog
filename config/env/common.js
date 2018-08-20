@@ -68,4 +68,7 @@ module.exports = {
       // }
     ]
   },
+  uploadFile: {
+    path: 'https://wangqiong.me/public/upload/',
+  }
 };
