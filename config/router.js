@@ -14,4 +14,6 @@ module.exports = function(app){
   app.use(require("../app/routes/auth.server.routes"));
   app.use(require("../app/routes/user.server.routes"));
   app.use(require("../app/routes/ueditor.server.routes"));
+  app.use(require("../app/routes/mail.server.routers"));
+  app.use(require("../app/routes/pay.server.routers"));
 };
