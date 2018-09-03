@@ -6,11 +6,7 @@
 const mongoose = require('mongoose');
 const config = require('../config');
 const connection = mongoose.createConnection(config.mongodb, {autoReconnect: true});
-connection.on('error', function(err){
-  if(err){
-    console.log(`connected => 启动数据库出现错误; err => ${err}`);
-  }
-});
+
 // ===== model schema import ======
 connection.models = require("./load.models")(connection);
 // ==========加载model结束===========
@@ -18,13 +14,16 @@ connection.models = require("./load.models")(connection);
 //监听链接
 connection.on('connected', function(err){
   if(err){
-    console.log(`connected => 启动数据库出现错误; err => ${err}`);
+    console.log(`启动数据库失败: err => ${err}`);
   }else{
-    console.log('connected: ', "启动数据库完成!");
+    console.log("启动数据库完成!");
   }
 });
+connection.on('error',function(err) {
+  console.log(`数据库链接失败: err=> ${err}`);
+});
 connection.on('disconnecting', function(err, msg){
-  console.log('disconnecting: ',err, msg);
+  console.log(`数据库断开链接: err=> ${err}, msg=> ${msg}`);
 });
 
 module.exports = connection;

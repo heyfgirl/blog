@@ -254,7 +254,7 @@ module.exports = {
                         resolve(item.id);
                       }
                       resolve();
-                    })
+                    });
                   });
                 } catch (err) {
                   logger.error(`[landingpage] publishAll error: ${err.message}`);
