@@ -8,6 +8,9 @@ const mongoose = require("../../../config/mongoose");
 const async = require("async");
 
 module.exports = {
+  /**
+   * 首页
+   */
   index: function(req, res){
     if(req.url !== "/"){
       return res.redirect("/");
@@ -80,11 +83,17 @@ module.exports = {
       });
     });
   },
+  /**
+   * 关于页面
+   */
   about: function(req, res){
     return res.render(`menu/about.html`,{
-
+      
     });
   },
+  /**
+   * 联系页面
+   */
   contact: function(req, res){
     return res.render(`menu/contact.html`,{
 
